@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Actividad 1</string>
+    <string name="parrafo">Escriba su párrafo aquí</string>
+    <string name="numero">Escriba su número aquí</string>
+</resources>
