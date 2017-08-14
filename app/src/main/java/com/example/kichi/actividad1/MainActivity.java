@@ -30,30 +30,36 @@ public class MainActivity extends AppCompatActivity {
         EditText txtnumero = (EditText)findViewById(R.id.txtNumero);        //Obtenemos el numero
         EditText txtparrafo = (EditText)findViewById(R.id.txtParrafo);      //Obtenemos el parrafo completo
 
-        String numero = txtnumero.getText().toString();             //Obtenemos numero
-        String parrafo = txtparrafo.getText().toString();           //Obtenemos el parrafo
+        String numero = txtnumero.getText().toString();                 //Obtenemos numero
+        String parrafo = txtparrafo.getText().toString();               //Obtenemos el parrafo
 
-        StringTokenizer st = new StringTokenizer(parrafo," ");      //Enumeramos las palabras
-        List<String> azar = new ArrayList<String>();                //Creamos una lista vacia
+        StringTokenizer st = new StringTokenizer(parrafo," ");          //Enumeramos las palabras
 
-        while(st.hasMoreTokens()){                                  //Creamos condicion de llenado
-            azar.add(st.nextToken());                               //Agregamos las palabras a la lista
-        }
+        if(st.countTokens() >= Integer.parseInt(numero)) {              //Creamos condicion para evitar desbordamiento
+            List<String> azar = new ArrayList<String>();                //Creamos una lista vacia
 
-        Collections.shuffle(azar);                                  //Desordenamos la lista
-        String textoAzar = "";                                      //Creamos un string que sera nuestra cadena al azar
-
-        for(int i=0;i<Integer.parseInt(numero);i++){                //Creamos condicion if y casteamos a entero
-            if((Integer.parseInt(numero)-1) == i){                  //Comparamos para crear la cadena sin un espacio al final
-                textoAzar = textoAzar + azar.get(i);                //Llenamos el String con las palabras desordenadas
-            }else{
-                textoAzar = textoAzar + azar.get(i) + " ";          //Mismo metodo de llenado
+            while (st.hasMoreTokens()) {                                //Creamos condicion de llenado
+                azar.add(st.nextToken());                               //Agregamos las palabras a la lista
             }
-        }
 
-        extras.putString("textoAzar",textoAzar);                    //Agregamos al bundle el texto
-        extras.putString("numero",numero);                          //Agregamos al bundle el numero
-        intent.putExtras(extras);                                   //Enviamos el conjunto entero
-        startActivity(intent);
+            Collections.shuffle(azar);                                  //Desordenamos la lista
+            String textoAzar = "";                                      //Creamos un string que sera nuestra cadena al azar
+
+            for (int i = 0; i < Integer.parseInt(numero); i++) {        //Creamos condicion if y casteamos a entero
+                if ((Integer.parseInt(numero) - 1) == i) {              //Comparamos para crear la cadena sin un espacio al final
+                    textoAzar = textoAzar + azar.get(i);                //Llenamos el String con las palabras desordenadas
+                } else {
+                    textoAzar = textoAzar + azar.get(i) + " ";          //Mismo metodo de llenado
+                }
+            }
+
+            extras.putString("textoAzar", textoAzar);                    //Agregamos al bundle el texto
+            extras.putString("numero", numero);                          //Agregamos al bundle el numero
+            intent.putExtras(extras);                                    //Enviamos el conjunto entero
+            startActivity(intent);
+        }else
+        {
+            Toast.makeText(this,"El numero ingresado debe ser menor o igual a la cantidad de letras que contiene el parrafo",Toast.LENGTH_LONG).show();
+        }
     }
 }
